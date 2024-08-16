@@ -114,7 +114,7 @@ router.post("/gossip", async (req,res) => {
         default:
             return res.send({
                 status: "200",
-                msg: `Running`
+                msg: `OK`
             });
     };
     

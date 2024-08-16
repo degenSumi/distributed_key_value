@@ -16,15 +16,17 @@ async function gossip(url,msg,data=null){
         });
    });
 }
+
 async function add_node(url) {
     const ringIndex = hashKey(url, infra.nodeSpace);
     if(infra.nodeKeys.includes(ringIndex))
         return "Place already taken";
     infra.nodeKeys.push(ringIndex);
     infra.nodes.push(url);
-    await fs.writeFileSync(path.resolve(__dirname, "../../infra/nodes.json"),JSON.stringify(infra));
+    fs.writeFileSync(path.resolve(__dirname, "../../infra/nodes.json"),JSON.stringify(infra));
     const shif_source_node = getHostByKey(ringIndex + 1);
     migrate(shif_source_node,infra.nodes[infra.nodeKeys.indexOf(ringIndex)]);
+    gossip(url,"add");
 };
 
 async function remove_node(url) {
@@ -37,7 +39,9 @@ async function remove_node(url) {
     console.log(host_destination);
     fs.writeFileSync(path.resolve(__dirname, "../../infra/nodes.json"),JSON.stringify(infra));
     const shif_destination_node = getHostByKey(ringIndex + 1);
-    // migrate(infra.nodes[infra.nodeKeys.indexOf(ringIndex)], shif_destination_node);
+    migrate(infra.nodes[infra.nodeKeys.indexOf(ringIndex)], shif_destination_node);
+    gossip(url,"remove");
+
 };
 
 async function migrate(host_source, host_destination){
@@ -51,7 +55,7 @@ async function migrate(host_source, host_destination){
     });
 }
 
-remove_node("http://localhost:3000")
+// remove_node("http://localhost:3000");
 
 module.exports = {
     add_node,
