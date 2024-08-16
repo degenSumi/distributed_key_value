@@ -21,8 +21,8 @@ router.get("/get",  async (req,res) => {
         }
         const item = await axios.get(nodeHost+"/api/get?key="+req.query.key)
         return res.send({
-            status: "200",
-            data: item
+            status: item.status,
+            data: item.data
         });
     } catch (error){
         switch(error.code){
@@ -47,14 +47,15 @@ router.post("/put",  async (req,res) => {
                 data: req.body
             })
         }
+        console.log(nodeHost + "/api/put");
         const item = await axios({
             method: 'post',
-            url: nodeHost,
+            url: nodeHost + "/api/put",
             data: req.body
         });
         return res.send({
-            status: "200",
-            data: item
+            status: item.status,
+            data: item.data.data
         });
     } catch(error){
         switch(error.code){
@@ -73,12 +74,53 @@ router.post("/migrate", async (req,res) => {
         const key = file.split('.');
         if(hashKey(key)<=req.query.dstkey){
             const data = fs.readFile(path.resolve(__dirname,"../../infra/").join(file));
-            await axios({
+            axios({
                 method: 'post',
-                url: node,
-                data: req.body
+                url: req.body.node + "/api/put",
+                data: data
             });
+            // Delete the key on the source node
         }
+    });
+    return res.send({
+        status: "200",
+        msg: `Migration Completed to ${req.body.node}`
+    })
+});
+
+router.post("/gossip", async (req,res) => {
+    const ringIndex = hashKey(req.body.url, infra.nodeSpace);
+    switch(req.body.msg){
+        case "remove" :
+            if(!infra.nodeKeys.includes(ringIndex))
+                return res.send({
+                    status: "200",
+                    msg: "Unknown NOde"
+                });
+            infra.nodeKeys.splice(infra.nodeKeys.indexOf(ringIndex),1);
+            infra.nodes.splice(infra.nodes.indexOf(url),1);
+            fs.writeFileSync(path.resolve(__dirname, "../../infra/nodes.json"),JSON.stringify(infra));
+            break;
+        case "add": 
+            if(infra.nodeKeys.includes(ringIndex))
+                return res.send({
+                    status: "200",
+                    msg: "Place already taken"
+                });
+            infra.nodeKeys.push(ringIndex);
+            infra.nodes.push(req.body.url);
+            fs.writeFileSync(path.resolve(__dirname, "../../infra/nodes.json"),JSON.stringify(infra));
+            break;
+        default:
+            return res.send({
+                status: "200",
+                msg: `Running`
+            });
+    };
+    
+    return res.send({
+        status: "200",
+        msg: `Migration Completed to ${req.body.node}`
     })
 });
 
