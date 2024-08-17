@@ -8,7 +8,7 @@ app.use(express.json());
 
 app.use("/api", router);
 
-const port = 3003;
+const port = 3000;
 
 add_node(`http://localhost:${port}`);
 

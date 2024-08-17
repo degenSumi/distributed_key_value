@@ -25,8 +25,9 @@ async function add_node(url) {
     infra.nodes.push(url);
     fs.writeFileSync(path.resolve(__dirname, "../../infra/nodes.json"),JSON.stringify(infra));
     const shif_source_node = getHostByKey(ringIndex + 1);
-    migrate(shif_source_node,infra.nodes[infra.nodeKeys.indexOf(ringIndex)]);
-    gossip(url,"add");
+    if(shif_source_node !== url)
+        await migrate(shif_source_node,infra.nodes[infra.nodeKeys.indexOf(ringIndex)]);
+    await gossip(url,"add");
 };
 
 async function remove_node(url) {
@@ -39,8 +40,9 @@ async function remove_node(url) {
     console.log(host_destination);
     fs.writeFileSync(path.resolve(__dirname, "../../infra/nodes.json"),JSON.stringify(infra));
     const shif_destination_node = getHostByKey(ringIndex + 1);
-    migrate(infra.nodes[infra.nodeKeys.indexOf(ringIndex)], shif_destination_node);
-    gossip(url,"remove");
+    if(shif_destination_node !== url)
+        await migrate(infra.nodes[infra.nodeKeys.indexOf(ringIndex)], shif_destination_node);
+    await gossip(url,"remove");
 
 };
 
