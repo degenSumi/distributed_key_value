@@ -47,14 +47,17 @@ async function remove_node(url) {
 };
 
 async function migrate(host_source, host_destination){
-    console.log("migrating", host_source, host_destination);
-    await axios({
-        method: 'post',
-        url: host_source + "/api/migrate",
-        data: {
-            node: host_destination
-        }
-    });
+    if(!host_source && !host_destination){
+        console.log("migrating", host_source, host_destination);
+        await axios({
+            method: 'post',
+            url: host_source + "/api/migrate",
+            data: {
+                node: host_destination
+            }
+        });
+    }
+    else console.log("Unexpected behaviour");
 }
 
 // remove_node("http://localhost:3000");

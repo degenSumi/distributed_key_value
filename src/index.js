@@ -10,7 +10,7 @@ app.use("/api", router);
 
 const port = 3000;
 
-add_node(`http://localhost:${port}`);
+add_node(`https://distributed-key-value.onrender.com`);  // Add your public IP
 
 app.listen(port, () => {
     console.log(`server up and running at ${port}`);
