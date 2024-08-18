@@ -47,7 +47,7 @@ async function remove_node(url) {
 };
 
 async function migrate(host_source, host_destination){
-    if(!host_source && !host_destination){
+    if(host_source && host_destination){
         console.log("migrating", host_source, host_destination);
         await axios({
             method: 'post',
