@@ -15,10 +15,11 @@ const get = async (req,res) => {
                     data: Buffer.from(item).toString() 
                 });
             }
+            console.log("getting it from node: ", req.nodeHost);
             const item = await axios.get(req.nodeHost+"/api/get?key="+req.query.key)
             return res.send({
-                status: item.status,
-                data: item.data
+                status: item.data.status,
+                data: item.data.data
             });
         } catch (error){
             switch(error.code){
@@ -41,7 +42,7 @@ const put = async (req,res) => {
                 data: req.body
             })
         }
-        console.log(req.nodeHost + "/api/put");
+        console.log("putting it to node: ", req.nodeHost);
         const item = await axios({
             method: 'post',
             url: req.nodeHost + "/api/put",
