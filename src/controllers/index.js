@@ -18,7 +18,6 @@ const get = async (req,res) => {
             console.log("getting it from node: ", req.nodeHost);
             const item = await axios.get(req.nodeHost+"/api/get?key="+req.query.key)
             return res.send({
-                status: item.data.status,
                 data: item.data.data
             });
         } catch (error){
