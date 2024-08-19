@@ -29,6 +29,7 @@ function getHostByKey(nodeKey){
     return nodes[nodeindex];
 }
 
+
 // console.log(hashKeySimple("SumitPowerLoom1", 20));
 // console.log(hashKey("http://localhost:3002", 50));
 

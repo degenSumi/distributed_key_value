@@ -8,9 +8,9 @@ app.use(express.json());
 
 app.use("/api", router);
 
-const port = 3000;
+const port = 3001;
 
-add_node(`https://distributed-key-value.onrender.com`);  // Add your public IP
+add_node(`http://localhost:${port}`);  // Add your public IP
 
 app.listen(port, () => {
     console.log(`server up and running at ${port}`);

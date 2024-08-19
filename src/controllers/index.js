@@ -8,7 +8,7 @@ const infra = require("../../infra/nodes.json");
 const get = async (req,res) => {
         try {
             console.log(req.get('host'));
-            if(req.nodeHost === req.protocol + "://" + req.get('host')){
+            if(req.nodeHost.includes(req.get('host'))){
                 const item = await fs.readFile(path.join(storage_dir,req.query.key)+'.json');
                 return res.send({
                     status: "200",
@@ -35,7 +35,7 @@ const get = async (req,res) => {
 
 const put = async (req,res) => {
     try{
-        if(req.nodeHost === req.protocol + "://" + req.get('host')){
+        if(req.nodeHost.includes(req.get('host'))){
             fs.writeFile(path.join(storage_dir,Object.keys(req.body)[0])+'.json', JSON.stringify(req.body));
             return res.send({
                 status: 200,
