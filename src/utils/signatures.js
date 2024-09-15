@@ -11,7 +11,7 @@ async function signData(data){
     // return signature;
 }
 
-async function verifysign(data, signature, from){
+function verifysign(data, signature, from){
     const address = ethers.recoverAddress(ethers.hashMessage(JSON.stringify(data)), signature);
     console.log(address);
     if(address.toLowerCase() === from.toLowerCase())
