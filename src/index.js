@@ -18,7 +18,7 @@ app.listen(port, () => {
 
 const cleanup = async () => {
    console.log("closing the server");
-   await remove_node(`http://localhost:${port}`);
+   await remove_node(`<fill_me>`);
    process.exit(0);
 }
 
