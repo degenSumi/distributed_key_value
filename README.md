@@ -4,9 +4,16 @@
 
 This is a simple distributed key-value store with multiple nodes hosted on Render. **Note:** Since nodes are hosted on Render’s free tier, there is a 50-second bootup time after inactivity.
 
+## Instructions for Starting Your Own Node and Adding It to the Global Network
+
+Follow these steps:
+
+1. Open the `index.js` file.
+2. In the `add_node` function, replace `<fill_me>` with your public IP address. This will add/sync the node with the distributed key-value store network.
+
 ### Current Deployed Nodes:
-- [https://distributed-key-value.onrender.com](https://distributed-key-value.onrender.com)
-- [https://distributed-key-value-1.onrender.com](https://distributed-key-value-1.onrender.com)
+- [Node 1](https://distributed-key-value.onrender.com)
+- [Node 2](https://distributed-key-value-1.onrender.com)
 
 ### API Endpoints
 
@@ -30,7 +37,6 @@ curl --location 'https://distributed-key-value.onrender.com/api/put' \
 
 ![Distributed Key-Value Store Design](https://github.com/user-attachments/assets/fa787473-8729-44f5-b0b0-293ed6ae568a)
 
---- 
-
+---
 
 To fully utilize multiple threads, you can use PM2.
