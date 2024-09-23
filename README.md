@@ -10,6 +10,7 @@ Follow these steps:
 
 1. Open the `index.js` file.
 2. In the `add_node` function, replace `<fill_me>` with your public IP address. This will add/sync the node with the distributed key-value store network.
+3. Start the server.
 
 ### Current Deployed Nodes:
 - [Node 1](https://distributed-key-value.onrender.com)
