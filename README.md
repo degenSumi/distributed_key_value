@@ -1,23 +1,33 @@
-Current Deployed Nodes:
-  https://distributed-key-value.onrender.com \n
-  https://distributed-key-value-1.onrender.com
-
-API endpoints:
-  Get:
-    Sample Request:
-    https://distributed-key-value-1.onrender.com/api/get?key=hey
-  POST: 
-    Sample Request:
-      curl --location 'https://distributed-key-value.onrender.com/api/put' \
-          --header 'Content-Type: application/json' \
-          --data '{
-              "hey": "there"
-          }'
 
 
+# Distributed Key-Value Store
 
-Note: Nodes are hosted on Render free tier so there is a 50 sec bootup period after inactivity
+This is a simple distributed key-value store with multiple nodes hosted on Render. **Note:** Since nodes are hosted on Render’s free tier, there is a 50-second bootup time after inactivity.
 
+### Current Deployed Nodes:
+- [https://distributed-key-value.onrender.com](https://distributed-key-value.onrender.com)
+- [https://distributed-key-value-1.onrender.com](https://distributed-key-value-1.onrender.com)
 
-High Level Design
-![image](https://github.com/user-attachments/assets/fa787473-8729-44f5-b0b0-293ed6ae568a)
+### API Endpoints
+
+#### GET:
+**Sample Request:**
+```
+https://distributed-key-value-1.onrender.com/api/get?key=hey
+```
+
+#### POST: 
+**Sample Request:**
+```bash
+curl --location 'https://distributed-key-value.onrender.com/api/put' \
+--header 'Content-Type: application/json' \
+--data '{
+    "hey": "there"
+}'
+```
+
+### High-Level Design
+
+![Distributed Key-Value Store Design](https://github.com/user-attachments/assets/fa787473-8729-44f5-b0b0-293ed6ae568a)
+
+--- 
